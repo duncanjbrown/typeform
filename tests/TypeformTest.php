@@ -22,4 +22,13 @@ class TypeformTest extends TestCase
 
 		$this->assertTrue(is_array($response));
 	}
+
+	function testGetResponsesWithParams() {
+		$typeform = new Typeform('FAKE_API_KEY');
+		\VCR\VCR::insertCassette('typeform_get_responses.yml');
+
+		$response = $typeform->getResponses('zOwLuu', ['page_size' => 100]);
+
+		$this->assertTrue(is_array($response));
+	}
 }

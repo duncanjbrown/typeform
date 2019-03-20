@@ -50,9 +50,14 @@ class Typeform
     /**
      * Get form responses
      */
-    public function getResponses($formId)
+    public function getResponses($formId, $params = [])
     {
-        $response = $this->http->get("/forms/" . $formId . "/responses");
+        $path = "/forms/" . $formId . "/responses";
+        $query_string = http_build_query($params);
+
+        $path_and_query = implode('?', [$path, $query_string]);
+
+        $response = $this->http->get($path_and_query);
         $body = json_decode($response->getBody());
         $responses = [];
         if (isset($body->items)) {
